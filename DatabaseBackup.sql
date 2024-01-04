@@ -9,68 +9,69 @@ END
 GO
 ALTER PROCEDURE [dbo].[DatabaseBackup]
 
-@Databases nvarchar(max) = NULL,
-@Directory nvarchar(max) = NULL,
-@BackupType nvarchar(max),
-@Verify nvarchar(max) = 'N',
-@CleanupTime int = NULL,
-@CleanupMode nvarchar(max) = 'AFTER_BACKUP',
-@Compress nvarchar(max) = NULL,
-@CopyOnly nvarchar(max) = 'N',
-@ChangeBackupType nvarchar(max) = 'N',
-@BackupSoftware nvarchar(max) = NULL,
-@CheckSum nvarchar(max) = 'N',
-@BlockSize int = NULL,
-@BufferCount int = NULL,
-@MaxTransferSize int = NULL,
-@NumberOfFiles int = NULL,
-@MinBackupSizeForMultipleFiles int = NULL,
-@MaxFileSize int = NULL,
-@CompressionLevel int = NULL,
-@Description nvarchar(max) = NULL,
-@Threads int = NULL,
-@Throttle int = NULL,
-@Encrypt nvarchar(max) = 'N',
-@EncryptionAlgorithm nvarchar(max) = NULL,
-@ServerCertificate nvarchar(max) = NULL,
-@ServerAsymmetricKey nvarchar(max) = NULL,
-@EncryptionKey nvarchar(max) = NULL,
-@ReadWriteFileGroups nvarchar(max) = 'N',
-@OverrideBackupPreference nvarchar(max) = 'N',
-@NoRecovery nvarchar(max) = 'N',
-@URL nvarchar(max) = NULL,
-@Credential nvarchar(max) = NULL,
-@MirrorDirectory nvarchar(max) = NULL,
-@MirrorCleanupTime int = NULL,
-@MirrorCleanupMode nvarchar(max) = 'AFTER_BACKUP',
-@MirrorURL nvarchar(max) = NULL,
-@AvailabilityGroups nvarchar(max) = NULL,
-@Updateability nvarchar(max) = 'ALL',
-@AdaptiveCompression nvarchar(max) = NULL,
-@ModificationLevel int = NULL,
-@LogSizeSinceLastLogBackup int = NULL,
-@TimeSinceLastLogBackup int = NULL,
-@DataDomainBoostHost nvarchar(max) = NULL,
-@DataDomainBoostUser nvarchar(max) = NULL,
-@DataDomainBoostDevicePath nvarchar(max) = NULL,
-@DataDomainBoostLockboxPath nvarchar(max) = NULL,
-@DirectoryStructure nvarchar(max) = '{ServerName}${InstanceName}{DirectorySeparator}{DatabaseName}{DirectorySeparator}{BackupType}_{Partial}_{CopyOnly}',
-@AvailabilityGroupDirectoryStructure nvarchar(max) = '{ClusterName}${AvailabilityGroupName}{DirectorySeparator}{DatabaseName}{DirectorySeparator}{BackupType}_{Partial}_{CopyOnly}',
-@FileName nvarchar(max) = '{ServerName}${InstanceName}_{DatabaseName}_{BackupType}_{Partial}_{CopyOnly}_{Year}{Month}{Day}_{Hour}{Minute}{Second}_{FileNumber}.{FileExtension}',
-@AvailabilityGroupFileName nvarchar(max) = '{ClusterName}${AvailabilityGroupName}_{DatabaseName}_{BackupType}_{Partial}_{CopyOnly}_{Year}{Month}{Day}_{Hour}{Minute}{Second}_{FileNumber}.{FileExtension}',
-@FileExtensionFull nvarchar(max) = NULL,
-@FileExtensionDiff nvarchar(max) = NULL,
-@FileExtensionLog nvarchar(max) = NULL,
-@Init nvarchar(max) = 'N',
-@Format nvarchar(max) = 'N',
-@ObjectLevelRecoveryMap nvarchar(max) = 'N',
-@ExcludeLogShippedFromLogBackup nvarchar(max) = 'Y',
-@DirectoryCheck nvarchar(max) = 'Y',
-@StringDelimiter nvarchar(max) = ',',
-@DatabaseOrder nvarchar(max) = NULL,
-@DatabasesInParallel nvarchar(max) = 'N',
-@LogToTable nvarchar(max) = 'N',
-@Execute nvarchar(max) = 'Y'
+@Databases NVARCHAR(MAX) = NULL,
+@Directory NVARCHAR(MAX) = NULL,
+@BackupType NVARCHAR(MAX),
+@Verify NVARCHAR(MAX) = 'N',
+@CleanupTime INT = NULL,
+@CleanupMode NVARCHAR(MAX) = 'AFTER_BACKUP',
+@Compress NVARCHAR(MAX) = NULL,
+@CopyOnly NVARCHAR(MAX) = 'N',
+@ChangeBackupType NVARCHAR(MAX) = 'N',
+@BackupSoftware NVARCHAR(MAX) = NULL,
+@CheckSum NVARCHAR(MAX) = 'N',
+@BlockSize INT = NULL,
+@BufferCount INT = NULL,
+@MaxTransferSize INT = NULL,
+@NumberOfFiles INT = NULL,
+@MinBackupSizeForMultipleFiles INT = NULL,
+@MaxFileSize INT = NULL,
+@CompressionLevel INT = NULL,
+@Description NVARCHAR(MAX) = NULL,
+@Threads INT = NULL,
+@Throttle INT = NULL,
+@Encrypt NVARCHAR(MAX) = 'N',
+@EncryptionAlgorithm NVARCHAR(MAX) = NULL,
+@ServerCertificate NVARCHAR(MAX) = NULL,
+@ServerAsymmetricKey NVARCHAR(MAX) = NULL,
+@EncryptionKey NVARCHAR(MAX) = NULL,
+@ReadWriteFileGroups NVARCHAR(MAX) = 'N',
+@Filegroups NVARCHAR(MAX) = NULL,
+@OverrideBackupPreference NVARCHAR(MAX) = 'N',
+@NoRecovery NVARCHAR(MAX) = 'N',
+@URL NVARCHAR(MAX) = NULL,
+@Credential NVARCHAR(MAX) = NULL,
+@MirrorDirectory NVARCHAR(MAX) = NULL,
+@MirrorCleanupTime INT = NULL,
+@MirrorCleanupMode NVARCHAR(MAX) = 'AFTER_BACKUP',
+@MirrorURL NVARCHAR(MAX) = NULL,
+@AvailabilityGroups NVARCHAR(MAX) = NULL,
+@Updateability NVARCHAR(MAX) = 'ALL',
+@AdaptiveCompression NVARCHAR(MAX) = NULL,
+@ModificationLevel INT = NULL,
+@LogSizeSinceLastLogBackup INT = NULL,
+@TimeSinceLastLogBackup INT = NULL,
+@DataDomainBoostHost NVARCHAR(MAX) = NULL,
+@DataDomainBoostUser NVARCHAR(MAX) = NULL,
+@DataDomainBoostDevicePath NVARCHAR(MAX) = NULL,
+@DataDomainBoostLockboxPath NVARCHAR(MAX) = NULL,
+@DirectoryStructure NVARCHAR(MAX) = '{ClusterName}{DirectorySeparator}{ServerName}_{InstanceName}{DirectorySeparator}{DatabaseName}',
+@AvailabilityGroupDirectoryStructure NVARCHAR(MAX) = '{ClusterName}{DirectorySeparator}{AvailabilityGroupName}{DirectorySeparator}{DatabaseName}',
+@FileName NVARCHAR(MAX) = '{ServerName}_{InstanceName}_{DatabaseName}_{BackupType}_{Partial}_{CopyOnly}_{Year}{Month}{Day}_{Hour}{Minute}{Second}_{FileNumber}.{FileExtension}',
+@AvailabilityGroupFileName NVARCHAR(MAX) = '{AvailabilityGroupName}_{DatabaseName}_{BackupType}_{Partial}_{CopyOnly}_{Year}{Month}{Day}_{Hour}{Minute}{Second}_{FileNumber}.{FileExtension}',
+@FileExtensionFull NVARCHAR(MAX) = NULL,
+@FileExtensionDiff NVARCHAR(MAX) = NULL,
+@FileExtensionLog NVARCHAR(MAX) = NULL,
+@Init NVARCHAR(MAX) = 'N',
+@Format NVARCHAR(MAX) = 'N',
+@ObjectLevelRecoveryMap NVARCHAR(MAX) = 'N',
+@ExcludeLogShippedFromLogBackup NVARCHAR(MAX) = 'Y',
+@DirectoryCheck NVARCHAR(MAX) = 'Y',
+@StringDelimiter NVARCHAR(MAX) = ',',
+@DatabaseOrder NVARCHAR(MAX) = NULL,
+@DatabasesInParallel NVARCHAR(MAX) = 'N',
+@LogToTable NVARCHAR(MAX) = 'N',
+@Execute NVARCHAR(max) = 'Y'
 
 AS
 
@@ -708,7 +709,7 @@ BEGIN
       EXECUTE [master].dbo.xp_instance_regread N'HKEY_LOCAL_MACHINE', N'SOFTWARE\Microsoft\MSSQLServer\MSSQLServer', N'BackupDirectory', @DefaultDirectory OUTPUT
     END
 
-    IF @DefaultDirectory LIKE 'http://%' OR @DefaultDirectory LIKE 'https://%'
+    IF @DefaultDirectory LIKE 's3://%' OR @DefaultDirectory LIKE 'https://%'
     BEGIN
       SET @URL = @DefaultDirectory
     END
@@ -961,22 +962,22 @@ BEGIN
   --// Check URLs                                                                          //--
   ----------------------------------------------------------------------------------------------------
 
-  IF EXISTS(SELECT * FROM @URLs WHERE Mirror = 0 AND DirectoryPath NOT LIKE 'https://%/%')
-  BEGIN
-    INSERT INTO @Errors ([Message], Severity, [State])
-    SELECT 'The value for the parameter @URL is not supported.', 16, 1
-  END
+  --IF EXISTS(SELECT * FROM @URLs WHERE Mirror = 0 AND (DirectoryPath NOT LIKE 'https://%/%' OR DirectoryPath NOT LIKE 's3://%'))
+  --BEGIN
+  --  INSERT INTO @Errors ([Message], Severity, [State])
+  --  SELECT 'The value 1 for the parameter @URL is not supported.', 16, 1
+  --END
 
   IF EXISTS (SELECT * FROM @URLs GROUP BY DirectoryPath HAVING COUNT(*) <> 1)
   BEGIN
     INSERT INTO @Errors ([Message], Severity, [State])
-    SELECT 'The value for the parameter @URL is not supported.', 16, 2
+    SELECT 'The value 2 for the parameter @URL is not supported.', 16, 2
   END
 
   IF (SELECT COUNT(*) FROM @URLs WHERE Mirror = 0) <> (SELECT COUNT(*) FROM @URLs WHERE Mirror = 1) AND (SELECT COUNT(*) FROM @URLs WHERE Mirror = 1) > 0
   BEGIN
     INSERT INTO @Errors ([Message], Severity, [State])
-    SELECT 'The value for the parameter @URL is not supported.', 16, 3
+    SELECT 'The value 3 for the parameter @URL is not supported.', 16, 3
   END
 
   ----------------------------------------------------------------------------------------------------
@@ -1295,35 +1296,35 @@ BEGIN
 
   ----------------------------------------------------------------------------------------------------
 
-  IF @MaxTransferSize < 65536 OR @MaxTransferSize > 4194304
-  BEGIN
-    INSERT INTO @Errors ([Message], Severity, [State])
-    SELECT 'The value for the parameter @MaxTransferSize is not supported.', 16, 1
-  END
+  --IF @MaxTransferSize < 65536 OR @MaxTransferSize > 4194304
+  --BEGIN
+  --  INSERT INTO @Errors ([Message], Severity, [State])
+  --  SELECT 'The value for the parameter @MaxTransferSize is not supported.', 16, 1
+  --END
 
-  IF @MaxTransferSize > 1048576 AND @BackupSoftware = 'SQLBACKUP'
-  BEGIN
-    INSERT INTO @Errors ([Message], Severity, [State])
-    SELECT 'The value for the parameter @MaxTransferSize is not supported.', 16, 2
-  END
+  --IF @MaxTransferSize > 1048576 AND @BackupSoftware = 'SQLBACKUP'
+  --BEGIN
+  --  INSERT INTO @Errors ([Message], Severity, [State])
+  --  SELECT 'The value for the parameter @MaxTransferSize is not supported.', 16, 2
+  --END
 
-  IF @MaxTransferSize IS NOT NULL AND @BackupSoftware = 'SQLSAFE'
-  BEGIN
-    INSERT INTO @Errors ([Message], Severity, [State])
-    SELECT 'The value for the parameter @MaxTransferSize is not supported.', 16, 3
-  END
+  --IF @MaxTransferSize IS NOT NULL AND @BackupSoftware = 'SQLSAFE'
+  --BEGIN
+  --  INSERT INTO @Errors ([Message], Severity, [State])
+  --  SELECT 'The value for the parameter @MaxTransferSize is not supported.', 16, 3
+  --END
 
-  IF @MaxTransferSize IS NOT NULL AND @URL IS NOT NULL AND @Credential IS NOT NULL
-  BEGIN
-    INSERT INTO @Errors ([Message], Severity, [State])
-    SELECT 'MAXTRANSFERSIZE is not supported when backing up to URL with page blobs. See https://docs.microsoft.com/en-us/sql/relational-databases/backup-restore/sql-server-backup-to-url', 16, 4
-  END
+  --IF @MaxTransferSize IS NOT NULL AND @URL IS NOT NULL AND @Credential IS NOT NULL
+  --BEGIN
+  --  INSERT INTO @Errors ([Message], Severity, [State])
+  --  SELECT 'MAXTRANSFERSIZE is not supported when backing up to URL with page blobs. See https://docs.microsoft.com/en-us/sql/relational-databases/backup-restore/sql-server-backup-to-url', 16, 4
+  --END
 
-  IF @MaxTransferSize IS NOT NULL AND @BackupSoftware = 'DATA_DOMAIN_BOOST'
-  BEGIN
-    INSERT INTO @Errors ([Message], Severity, [State])
-    SELECT 'The value for the parameter @MaxTransferSize is not supported.', 16, 5
-  END
+  --IF @MaxTransferSize IS NOT NULL AND @BackupSoftware = 'DATA_DOMAIN_BOOST'
+  --BEGIN
+  --  INSERT INTO @Errors ([Message], Severity, [State])
+  --  SELECT 'The value for the parameter @MaxTransferSize is not supported.', 16, 5
+  --END
 
   ----------------------------------------------------------------------------------------------------
 
@@ -1580,28 +1581,28 @@ BEGIN
 
   ----------------------------------------------------------------------------------------------------
 
-  IF (NOT (@BackupSoftware IS NULL AND @Encrypt = 'Y') AND @ServerCertificate IS NOT NULL)
-  BEGIN
-    INSERT INTO @Errors ([Message], Severity, [State])
-    SELECT 'The value for the parameter @ServerCertificate is not supported.', 16, 1
-  END
+  --IF (NOT (@BackupSoftware IS NULL AND @Encrypt = 'Y') AND @ServerCertificate IS NOT NULL)
+  --BEGIN
+  --  INSERT INTO @Errors ([Message], Severity, [State])
+  --  SELECT 'The value 1 for the parameter @ServerCertificate is not supported.', 16, 1
+  --END
 
   IF @BackupSoftware IS NULL AND @Encrypt = 'Y' AND @ServerCertificate IS NULL AND @ServerAsymmetricKey IS NULL
   BEGIN
     INSERT INTO @Errors ([Message], Severity, [State])
-    SELECT 'The value for the parameter @ServerCertificate is not supported.', 16, 2
+    SELECT 'The value 2 for the parameter @ServerCertificate is not supported.', 16, 2
   END
 
   IF @BackupSoftware IS NULL AND @Encrypt = 'Y' AND @ServerCertificate IS NOT NULL AND @ServerAsymmetricKey IS NOT NULL
   BEGIN
     INSERT INTO @Errors ([Message], Severity, [State])
-    SELECT 'The value for the parameter @ServerCertificate is not supported.', 16, 3
+    SELECT 'The value 3 for the parameter @ServerCertificate is not supported.', 16, 3
   END
 
   IF @ServerCertificate IS NOT NULL AND NOT EXISTS(SELECT * FROM master.sys.certificates WHERE name = @ServerCertificate)
   BEGIN
     INSERT INTO @Errors ([Message], Severity, [State])
-    SELECT 'The value for the parameter @ServerCertificate is not supported.', 16, 4
+    SELECT 'The value 4 for the parameter @ServerCertificate is not supported.', 16, 4
   END
 
   ----------------------------------------------------------------------------------------------------
@@ -1703,13 +1704,13 @@ BEGIN
   IF @URL IS NOT NULL AND @Directory IS NOT NULL
   BEGIN
     INSERT INTO @Errors ([Message], Severity, [State])
-    SELECT 'The value for the parameter @URL is not supported.', 16, 1
+    SELECT 'The value 4 for the parameter @URL is not supported.', 16, 1
   END
 
   IF @URL IS NOT NULL AND @MirrorDirectory IS NOT NULL
   BEGIN
     INSERT INTO @Errors ([Message], Severity, [State])
-    SELECT 'The value for the parameter @URL is not supported.', 16, 2
+    SELECT 'The value 5 for the parameter @URL is not supported.', 16, 2
   END
 
   IF @URL IS NOT NULL AND @Version < 11.03339
@@ -1726,23 +1727,23 @@ BEGIN
 
   ----------------------------------------------------------------------------------------------------
 
-  IF @Credential IS NULL AND @URL IS NOT NULL AND NOT (@Version >= 13 OR SERVERPROPERTY('EngineEdition') = 8)
-  BEGIN
-    INSERT INTO @Errors ([Message], Severity, [State])
-    SELECT 'The value for the parameter @Credential is not supported.', 16, 1
-  END
+  --IF @Credential IS NULL AND @URL IS NOT NULL AND NOT (@Version >= 13 OR SERVERPROPERTY('EngineEdition') = 8)
+  --BEGIN
+  --  INSERT INTO @Errors ([Message], Severity, [State])
+  --  SELECT 'The value for the parameter @Credential is not supported.', 16, 1
+  --END
 
-  IF @Credential IS NOT NULL AND @URL IS NULL
-  BEGIN
-    INSERT INTO @Errors ([Message], Severity, [State])
-    SELECT 'The value for the parameter @Credential is not supported.', 16, 2
-  END
+  --IF @Credential IS NOT NULL AND @URL IS NULL
+  --BEGIN
+  --  INSERT INTO @Errors ([Message], Severity, [State])
+  --  SELECT 'The value for the parameter @Credential is not supported.', 16, 2
+  --END
 
-  IF @URL IS NOT NULL AND @Credential IS NULL AND NOT EXISTS(SELECT * FROM sys.credentials WHERE UPPER(credential_identity) = 'SHARED ACCESS SIGNATURE')
-  BEGIN
-    INSERT INTO @Errors ([Message], Severity, [State])
-    SELECT 'The value for the parameter @Credential is not supported.', 16, 3
-  END
+  --IF @URL IS NOT NULL AND @Credential IS NULL AND NOT EXISTS(SELECT * FROM sys.credentials WHERE UPPER(credential_identity) = 'SHARED ACCESS SIGNATURE')
+  --BEGIN
+  --  INSERT INTO @Errors ([Message], Severity, [State])
+  --  SELECT 'The value for the parameter @Credential is not supported.', 16, 3
+  --END
 
   IF @Credential IS NOT NULL AND NOT EXISTS(SELECT * FROM sys.credentials WHERE name = @Credential)
   BEGIN
@@ -3505,6 +3506,10 @@ BEGIN
           END
 
           IF @ReadWriteFileGroups = 'Y' AND @CurrentDatabaseName <> 'master' SET @CurrentCommand += ' READ_WRITE_FILEGROUPS'
+					ELSE IF @Filegroups IS NOT NULL
+					BEGIN
+						SELECT @CurrentCommand += STUFF(STRING_AGG(', FILEGROUP = ''' + TRIM(value) + '''',''),1,1,'') FROM STRING_SPLIT(@Filegroups, ',')
+					END
 
           SET @CurrentCommand += ' TO'
 
