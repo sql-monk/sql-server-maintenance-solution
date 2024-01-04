@@ -971,13 +971,13 @@ BEGIN
   IF EXISTS (SELECT * FROM @URLs GROUP BY DirectoryPath HAVING COUNT(*) <> 1)
   BEGIN
     INSERT INTO @Errors ([Message], Severity, [State])
-    SELECT 'The value 2 for the parameter @URL is not supported.', 16, 2
+    SELECT 'The value for the parameter @URL is not supported.', 16, 2
   END
 
   IF (SELECT COUNT(*) FROM @URLs WHERE Mirror = 0) <> (SELECT COUNT(*) FROM @URLs WHERE Mirror = 1) AND (SELECT COUNT(*) FROM @URLs WHERE Mirror = 1) > 0
   BEGIN
     INSERT INTO @Errors ([Message], Severity, [State])
-    SELECT 'The value 3 for the parameter @URL is not supported.', 16, 3
+    SELECT 'The value for the parameter @URL is not supported.', 16, 3
   END
 
   ----------------------------------------------------------------------------------------------------
@@ -1590,19 +1590,19 @@ BEGIN
   IF @BackupSoftware IS NULL AND @Encrypt = 'Y' AND @ServerCertificate IS NULL AND @ServerAsymmetricKey IS NULL
   BEGIN
     INSERT INTO @Errors ([Message], Severity, [State])
-    SELECT 'The value 2 for the parameter @ServerCertificate is not supported.', 16, 2
+    SELECT 'The value for the parameter @ServerCertificate is not supported.', 16, 2
   END
 
   IF @BackupSoftware IS NULL AND @Encrypt = 'Y' AND @ServerCertificate IS NOT NULL AND @ServerAsymmetricKey IS NOT NULL
   BEGIN
     INSERT INTO @Errors ([Message], Severity, [State])
-    SELECT 'The value 3 for the parameter @ServerCertificate is not supported.', 16, 3
+    SELECT 'The value for the parameter @ServerCertificate is not supported.', 16, 3
   END
 
   IF @ServerCertificate IS NOT NULL AND NOT EXISTS(SELECT * FROM master.sys.certificates WHERE name = @ServerCertificate)
   BEGIN
     INSERT INTO @Errors ([Message], Severity, [State])
-    SELECT 'The value 4 for the parameter @ServerCertificate is not supported.', 16, 4
+    SELECT 'The value for the parameter @ServerCertificate is not supported.', 16, 4
   END
 
   ----------------------------------------------------------------------------------------------------
@@ -1704,13 +1704,13 @@ BEGIN
   IF @URL IS NOT NULL AND @Directory IS NOT NULL
   BEGIN
     INSERT INTO @Errors ([Message], Severity, [State])
-    SELECT 'The value 4 for the parameter @URL is not supported.', 16, 1
+    SELECT 'The value for the parameter @URL is not supported.', 16, 1
   END
 
   IF @URL IS NOT NULL AND @MirrorDirectory IS NOT NULL
   BEGIN
     INSERT INTO @Errors ([Message], Severity, [State])
-    SELECT 'The value 5 for the parameter @URL is not supported.', 16, 2
+    SELECT 'The value for the parameter @URL is not supported.', 16, 2
   END
 
   IF @URL IS NOT NULL AND @Version < 11.03339
